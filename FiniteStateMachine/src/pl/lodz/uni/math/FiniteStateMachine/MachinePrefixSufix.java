@@ -1,6 +1,6 @@
 package pl.lodz.uni.math.FiniteStateMachine;
 
-public class Machine {
+public class MachinePrefixSufix {
 	private int actualState;
 
 	public void setActualState(int actualState) {
@@ -73,10 +73,16 @@ public class Machine {
 
 	}
 
-	public Machine(String pattern) {
+	public MachinePrefixSufix(String pattern) {
 		this.pattern = pattern;
 		actualState = 0;
 		makeTransitionArray();
 	}
+	
+	   public static void main(String[] args) {
+	       MachinePrefixSufix machine=new MachinePrefixSufix("ala");
+	       machine.searchPatternInText("alamakotaalafenifeifalala");
+	      // machine.searchPatternInText("alamakotaalafenifeif");
+	       }
 
 }
