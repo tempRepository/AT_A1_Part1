@@ -30,35 +30,55 @@ public class NaivePM {
          */
     }
 
+    public static int starCounter(String pattern) {
+        int counter = 0;
+        for (int i = 0; i < pattern.length(); i++) {
+            if (pattern.charAt(i) == '*') {
+                counter++;
+            }
+        }
+        return counter;
+    }
+
     public static boolean search(String pattern, String text, boolean quiet) {
         boolean flag = false;
+        String output = "";
 
         if (!pattern.contains("*")) {
             for (int i = 0; i < text.length() - pattern.length() + 1; i++) {
                 if (myEquals(text.substring(i, i + pattern.length()), pattern)) {
                     if (!quiet) {
-                        System.out.println("I found occurence at position: "
-                                + i);
+                        output += "I found occurence at position: " + i + "\n";
                     }
                     flag = true;
                 }
             }
         } else {
-            for (int i = 0; i < text.length() - pattern.length() + 1; i++) {
+            for (int i = 0; i < text.length()
+                    - (pattern.length() - starCounter(pattern)) + 1; i++) {
                 String tempPattern = pattern.substring(0, pattern.indexOf("*"));
                 if (text.contains(tempPattern)) {
                     boolean answer = search(
                             pattern.substring(pattern.indexOf("*") + 1),
                             text.substring(text.indexOf(tempPattern)
                                     + tempPattern.length()), true);
-                    System.out.println("I found occurence at position: " + text.indexOf(tempPattern));
+                    if (!quiet) {
+                        output += "I found occurence at position: "
+                                + text.indexOf(tempPattern) + "\n";
+
+                    }
+                    if (answer) {
+                        System.out.println(output);
+                    }
                     return answer;
                 } else {
                     return false;
                 }
             }
         }
-
+        if (flag) {
+            System.out.println(output);
+        }
         return flag;
     }
 
@@ -66,7 +86,7 @@ public class NaivePM {
         // TODO Auto-generated method stub
         // dopisać zgodność dla ? jako spacji!
 
-        System.out.println(NaivePM.search("a*a", "pppppavgdga", false));
+        System.out.println(NaivePM.search("a*a", "aa", false));
     }
 
 }
