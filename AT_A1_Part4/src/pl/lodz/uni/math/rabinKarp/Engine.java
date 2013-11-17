@@ -19,8 +19,9 @@ public class Engine {
     public int computeHash(String myText) {
         int hash = 0;
         for (int i = 0; i < myText.length(); i++) {
-            hash += myText.charAt(i) % ourModulo;
+            hash += myText.charAt(i)*Math.pow(10, (myText.length()-1)-i) % ourModulo;
         }
+  
         return hash;
     }
 
@@ -31,9 +32,10 @@ public class Engine {
         int falseCounter = 0;
         int textHash = computeHash(text.substring(0, pattern.length()));
         for (int i = 0; i < text.length() - pattern.length(); i++) {
+            //recomputing the hash in constant time
             if (i != 0) {
-                textHash = (textHash - text.charAt(i - 1) % ourModulo)
-                        + text.charAt(i + pattern.length() - 1);
+                int tempA=(int) (textHash-(text.charAt(i-1)*Math.pow(10, pattern.length() -1)));
+                textHash=(int) (10*tempA)+text.charAt(i+pattern.length()-1);
             }
             if (textHash == patternHash) {
                 // sprawdzanie rzeczywistej zgodnosci
@@ -49,7 +51,7 @@ public class Engine {
 
     public static void main(String[] args) {
         Engine engine = new Engine(Integer.MAX_VALUE / 2);
-        engine.searchForPattern("alamakotaalaalafiernfief", "ala");
+        engine.searchForPattern("alamakotaalakota", "ala");
 
     }
 
