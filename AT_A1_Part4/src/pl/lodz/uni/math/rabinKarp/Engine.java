@@ -19,7 +19,7 @@ public class Engine {
     public int computeHash(String myText) {
         int hash = 0;
         for (int i = 0; i < myText.length(); i++) {
-            hash += myText.charAt(i)*Math.pow(10, (myText.length()-1)-i) % ourModulo;
+            hash += myText.charAt(i)*Math.pow(257, (myText.length()-1)-i) % ourModulo;
         }
   
         return hash;
@@ -35,8 +35,8 @@ public class Engine {
             //recomputing the hash in constant time
             if (i != 0) {
                 //?
-                int tempA=(int) (textHash-(text.charAt(i-1)*Math.pow(10, pattern.length() -1)));
-                textHash=(int) (10*tempA)+text.charAt(i+pattern.length()-1);
+                int tempA=(int) (textHash-(text.charAt(i-1)*Math.pow(257, pattern.length() -1)));
+                textHash=(int) (257*tempA)+text.charAt(i+pattern.length()-1);
             }
             if (textHash == patternHash) {
                 // sprawdzanie rzeczywistej zgodnosci
