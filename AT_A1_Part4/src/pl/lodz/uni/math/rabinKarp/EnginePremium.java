@@ -1,6 +1,6 @@
 package pl.lodz.uni.math.rabinKarp;
 
-public class Engine {
+public class EnginePremium {
     private static int ourModulo = 0;
 
     public static int getOurModulo() {
@@ -8,10 +8,10 @@ public class Engine {
     }
 
     public static void setOurModulo(int ourModulo) {
-        Engine.ourModulo = ourModulo;
+        EnginePremium.ourModulo = ourModulo;
     }
 
-    public Engine(int ourModulo) {
+    public EnginePremium(int ourModulo) {
         this.ourModulo = ourModulo;
     }
 
@@ -34,7 +34,6 @@ public class Engine {
         for (int i = 0; i < text.length() - pattern.length(); i++) {
             //recomputing the hash in constant time
             if (i != 0) {
-                //?
                 int tempA=(int) (textHash-(text.charAt(i-1)*Math.pow(10, pattern.length() -1)));
                 textHash=(int) (10*tempA)+text.charAt(i+pattern.length()-1);
             }
@@ -51,7 +50,7 @@ public class Engine {
     }
 
     public static void main(String[] args) {
-        Engine engine = new Engine(Integer.MAX_VALUE / 2);
+        EnginePremium engine = new EnginePremium(Integer.MAX_VALUE / 2);
         engine.searchForPattern("alamakotaalakota", "ala");
 
     }
