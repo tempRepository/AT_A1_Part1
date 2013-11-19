@@ -48,7 +48,7 @@ public class SundayPremium {
                 flag = true;
             }
             if (text.length() > (i + pattern.length())) {
-                if (!pattern.contains("?")) {
+                if (skipTable['?'] == pattern.length() + 1) {
                     i += skipTable[text.charAt(i + pattern.length())];
                 } else {
                     if (skipTable[text.charAt(i + pattern.length())] < skipTable['?']) {
@@ -66,20 +66,47 @@ public class SundayPremium {
         return flag;
     }
 
+    public static int searchWithPosition(String pattern, String text) {
+        createSkipTable(pattern);
+        int i = 0;
+        while (i <= text.length() - pattern.length()) {
+            if (myEquals(text.substring(i, i + pattern.length()), pattern)) {
+                return i;
+            }
+            if (text.length() > (i + pattern.length())) {
+                if (skipTable['?'] == pattern.length() + 1) {
+                    i += skipTable[text.charAt(i + pattern.length())];
+                } else {
+                    if (skipTable[text.charAt(i + pattern.length())] < skipTable['?']) {
+                        i += skipTable[text.charAt(i + pattern.length())];
+                    } else {
+                        i += skipTable['?'];
+                    }
+                }
+
+            } else {
+                break;
+            }
+
+        }
+        return -1;
+    }
+
     public static boolean starSearch(String pattern, String text, boolean quiet) {
         boolean flag = false;
         String output = "";
-
-        if (!pattern.contains("*")) {
+        int starPosition = pattern.indexOf('*');
+        if (starPosition == -1) {
             return search(pattern, text, quiet);
         } else {
             for (int i = 0; i < text.length()
                     - (pattern.length() - starCounter(pattern)) + 1; i++) {
-                String tempPattern = pattern.substring(0, pattern.indexOf("*"));
-                if (text.contains(tempPattern)) {
+                String tempPattern = pattern.substring(0, starPosition);
+                int tempPatternPosition = searchWithPosition(tempPattern, text);
+                if (tempPatternPosition != -1) {
                     boolean answer = starSearch(
-                            pattern.substring(pattern.indexOf("*") + 1),
-                            text.substring(text.indexOf(tempPattern)
+                            pattern.substring(starPosition + 1),
+                            text.substring(tempPatternPosition
                                     + tempPattern.length()), true);
                     if (!quiet) {
                         output += "I found occurence at position: "
