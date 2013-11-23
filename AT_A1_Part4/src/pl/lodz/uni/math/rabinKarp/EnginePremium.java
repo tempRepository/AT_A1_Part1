@@ -54,13 +54,13 @@ public class EnginePremium {
         int falseCounter = 0;
         int patternLength = pattern[0].length;
         int columnsQuantity = text[0].length;
-
+char[][] reversedPattern;
         // computing pattern hash
         int[] patternTempHashes;
 
-        patterns.add(pattern);
-        pattern = reversePattern(pattern);
-        patterns.add(pattern);
+       // patterns.add(pattern);
+       // pattern = reversePattern(pattern);
+       // patterns.add(pattern);
         for (int i = 0; i < 4; i++) {
             if (i != 0) {
                 pattern = turnPatternToTheLeft(pattern);
@@ -69,11 +69,11 @@ public class EnginePremium {
             computeTempHashes(patternTempHashes, pattern, patternLength);
             patternsHashes.add(computeHash(patternLength, patternTempHashes));
             patterns.add(pattern);
-            pattern = reversePattern(pattern);
+            reversedPattern = reversePattern(pattern);
             patternTempHashes = new int[patternLength];
-            computeTempHashes(patternTempHashes, pattern, patternLength);
+            computeTempHashes(patternTempHashes, reversedPattern, patternLength);
             patternsHashes.add(computeHash(patternLength, patternTempHashes));
-            patterns.add(pattern);
+            patterns.add(reversedPattern);
         }
 
         int[] tempHashes = new int[columnsQuantity];
