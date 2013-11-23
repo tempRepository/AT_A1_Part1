@@ -109,16 +109,39 @@ public class EnginePremium {
         System.out.println("Fake alarms: " + falseCounter);
     }
 
+    private char[][] turnPatternToTheLeft(char[][] pattern)
+    {
+        char[][] newPattern=new char[pattern.length][pattern[0].length];
+        for (int i = 0; i < pattern.length; i++) {
+            for (int j = 0; j < pattern[0].length; j++) {
+                newPattern[i][j]=pattern[j][pattern.length-1-i];
+            }
+        }
+        return newPattern;
+    }
+    
+    private char[][] reversePattern(char[][] pattern)
+    {
+        char[][] newPattern=new char[pattern.length][pattern[0].length];
+        for (int i = 0; i < pattern.length; i++) {
+            for (int j = 0; j < pattern[0].length; j++) {
+                newPattern[i][j]=pattern[i][pattern[0].length-1-j];
+            }
+        }
+        return newPattern;
+    }
+    
     public static void main(String[] args) {
         EnginePremium engine = new EnginePremium(Integer.MAX_VALUE / 2);
         char[][] text = { { '1', '1', '2' }, { '3', '3', '4' },
                 { '1', '2', '5' }, { '3', '4', '5' } };
 
-        char[][] pattern = { { '1', '2' }, { '3', '4' } };
+        char[][] pattern = { { '1', '2' ,'3'}, { '4', '5' , '6'}, {'7', '8', '9'} };
         
        // char[][] pattern = { { '3', '3' }, { '1', '2' } };
 
-        engine.searchForPattern(text, pattern);
+        //engine.searchForPattern(text, pattern);
+       // engine.reversePattern(pattern);
 
     }
 
