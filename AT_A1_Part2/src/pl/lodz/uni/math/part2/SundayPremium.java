@@ -7,7 +7,8 @@ import java.util.Scanner;
 public class SundayPremium {
     static int[] skipTable = new int[256];
     public static int peeksCounter = 0;
-    
+    public static double avgSkipSum=0;
+    public static double avgSkipQuantity=0;
     public static String loadBook(String name) {
         Scanner in = null;
         String temp = "";
@@ -74,11 +75,18 @@ public class SundayPremium {
             }
             if (text.length() > (i + pattern.length())) {
                 if (skipTable['?'] == pattern.length() + 1) {
+                    avgSkipQuantity++;
+                    avgSkipSum+=skipTable[text.charAt(i + pattern.length())];
                     i += skipTable[text.charAt(i + pattern.length())];
+               
                 } else {
                     if (skipTable[text.charAt(i + pattern.length())] < skipTable['?']) {
+                        avgSkipQuantity++;
+                        avgSkipSum+=skipTable[text.charAt(i + pattern.length())];
                         i += skipTable[text.charAt(i + pattern.length())];
                     } else {
+                        avgSkipQuantity++;
+                        avgSkipSum+=skipTable[text.charAt(i + pattern.length())];
                         i += skipTable['?'];
                     }
                 }
@@ -100,11 +108,17 @@ public class SundayPremium {
             }
             if (text.length() > (i + pattern.length())) {
                 if (skipTable['?'] == pattern.length() + 1) {
+                    avgSkipQuantity++;
+                    avgSkipSum+=skipTable[text.charAt(i + pattern.length())];
                     i += skipTable[text.charAt(i + pattern.length())];
                 } else {
                     if (skipTable[text.charAt(i + pattern.length())] < skipTable['?']) {
+                        avgSkipQuantity++;
+                        avgSkipSum+=skipTable[text.charAt(i + pattern.length())];
                         i += skipTable[text.charAt(i + pattern.length())];
                     } else {
+                        avgSkipQuantity++;
+                        avgSkipSum+=skipTable[text.charAt(i + pattern.length())];
                         i += skipTable['?'];
                     }
                 }
@@ -158,6 +172,7 @@ public class SundayPremium {
         System.out.println(SundayPremium.starSearch("bird",
                 book, false));
         System.out.println(peeksCounter);
+        System.out.println("Avg skip :"+avgSkipSum/avgSkipQuantity);
 
     }
 
