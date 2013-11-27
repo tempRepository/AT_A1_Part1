@@ -1,11 +1,36 @@
 package pl.lodz.uni.math.part1;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 public class NaivePM {
+    public static int peeksCounter = 0;
+
+    public static String loadBook(String name) {
+        Scanner in = null;
+        String temp = "";
+
+        try {
+            in = new Scanner(new FileReader(name));
+            while (in.hasNextLine()) {
+                temp += in.nextLine();
+            }
+            in.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
 
     public static boolean myEquals(String text, String pattern) {
 
         boolean equals = true;
         for (int i = 0; i < text.length() && equals; i++) {
+            peeksCounter++;
             if ((text.charAt(i) != pattern.charAt(i))
                     && pattern.charAt(i) != "?".toCharArray()[0]) {
                 equals = false;
@@ -37,8 +62,8 @@ public class NaivePM {
     public static boolean search(String pattern, String text, boolean quiet) {
         boolean flag = false;
         String output = "";
-        int starPosition=pattern.indexOf("*");
-        if (starPosition==-1) {
+        int starPosition = pattern.indexOf("*");
+        if (starPosition == -1) {
             for (int i = 0; i < text.length() - pattern.length() + 1; i++) {
                 if (myEquals(text.substring(i, i + pattern.length()), pattern)) {
                     if (!quiet) {
@@ -51,8 +76,9 @@ public class NaivePM {
             for (int i = 0; i < text.length()
                     - (pattern.length() - starCounter(pattern)) + 1; i++) {
                 String tempPattern = pattern.substring(0, starPosition);
-                int tempPatternPosition=simpleSearchWithPosition(tempPattern, text);
-                if (tempPatternPosition!=-1) {
+                int tempPatternPosition = simpleSearchWithPosition(tempPattern,
+                        text);
+                if (tempPatternPosition != -1) {
                     boolean answer = search(
                             pattern.substring(starPosition + 1),
                             text.substring(tempPatternPosition
@@ -78,7 +104,10 @@ public class NaivePM {
     }
 
     public static void main(String[] args) {
-        System.out.println(NaivePM.search("a*a", "dwdwdwaddddfa", false));
+        String book = loadBook("book");
+        System.out.println(NaivePM.search("bird", book, false));
+        System.out.println(NaivePM.peeksCounter);
+
     }
 
 }
