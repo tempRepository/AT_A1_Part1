@@ -1,8 +1,32 @@
 package pl.lodz.uni.math.part2;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 public class SundayPremium {
     static int[] skipTable = new int[256];
+    public static int peeksCounter = 0;
+    
+    public static String loadBook(String name) {
+        Scanner in = null;
+        String temp = "";
 
+        try {
+            in = new Scanner(new FileReader(name));
+            while (in.hasNextLine()) {
+                temp += in.nextLine();
+            }
+            in.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
+    
     private static void createSkipTable(String pattern) {
         for (int i = 0; i < skipTable.length; i++) {
             skipTable[i] = pattern.length() + 1;
@@ -18,6 +42,7 @@ public class SundayPremium {
 
         boolean equals = true;
         for (int i = 0; i < text.length() && equals; i++) {
+            peeksCounter++;
             if ((text.charAt(i) != pattern.charAt(i))
                     && pattern.charAt(i) != "?".toCharArray()[0]) {
                 equals = false;
@@ -129,8 +154,10 @@ public class SundayPremium {
     }
 
     public static void main(String[] args) {
-        System.out.println(SundayPremium.starSearch("ala*ala*ala",
-                "gdrgrdalamakotaalagrgrgrgrgrgalagrgrg", false));
+        String book=loadBook("book");
+        System.out.println(SundayPremium.starSearch("bird",
+                book, false));
+        System.out.println(peeksCounter);
 
     }
 
