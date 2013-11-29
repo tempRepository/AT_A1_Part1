@@ -1,7 +1,14 @@
 package pl.lodz.uni.math.part2;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
 public class Sunday {
 int[] skipTable=new int[256];
+
+
+
 private void createSkipTable(String pattern)
 {
     for (int i = 0; i < skipTable.length; i++) {
@@ -44,6 +51,7 @@ public void search(String text, String pattern)
     }
 }
     public static void main(String[] args) {
+      
         Sunday sunday=new Sunday();
         sunday.search("alamakotala", "ala");
 

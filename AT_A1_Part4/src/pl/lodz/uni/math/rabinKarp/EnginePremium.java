@@ -25,8 +25,7 @@ public class EnginePremium {
         for (int i = 0; i < patternSize; i++) {
             double a = tempHashes[i];
             double b = Math.pow(SIGMA, (patternSize - 1) - i);
-            // hash += tempHashes[i] * (int)Math.pow(SIGMA, (patternSize - 1) -
-            // i);
+
             hash += (a * b);
         }
 
@@ -58,9 +57,6 @@ char[][] reversedPattern;
         // computing pattern hash
         int[] patternTempHashes;
 
-       // patterns.add(pattern);
-       // pattern = reversePattern(pattern);
-       // patterns.add(pattern);
         for (int i = 0; i < 4; i++) {
             if (i != 0) {
                 pattern = turnPatternToTheLeft(pattern);
@@ -81,7 +77,7 @@ char[][] reversedPattern;
         int tempHash = computeHash(patternLength, tempHashes);
         // further logic part
         for (int k = 0; k <= text.length - patternLength; k++) {
-            // add some shift up and down logic for recomputing hashes
+      
             if (k != 0) {
 
                 // recomputing temHashes array
@@ -162,10 +158,8 @@ char[][] reversedPattern;
 
         char[][] pattern = { { '1', '2' }, { '3', '4'}};
 
-        // char[][] pattern = { { '3', '3' }, { '1', '2' } };
-
         engine.searchForPattern(text, pattern);
-        // engine.reversePattern(pattern);
+
 
     }
 

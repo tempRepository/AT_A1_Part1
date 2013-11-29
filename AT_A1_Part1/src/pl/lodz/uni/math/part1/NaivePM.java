@@ -104,8 +104,19 @@ public class NaivePM {
     }
 
     public static void main(String[] args) {
-        String book = loadBook("book");
-        System.out.println(NaivePM.search("bird", book, false));
+        //pattern1 ajfvl
+        //pattern2 jfkdlopruj
+        String book = loadBook("book2000");
+        String pattern="jfkdlopruj";
+        long avgTime=0;
+        for (int i = 0; i < 10; i++) {
+            TimeCounter.start();
+            NaivePM.search(pattern, book, true);
+            avgTime+=TimeCounter.stopTime();
+        }
+        System.out.println("Avg time "+(avgTime/10));
+        NaivePM.peeksCounter=0;
+        System.out.println(NaivePM.search(pattern, book, false));
         System.out.println(NaivePM.peeksCounter);
 
     }

@@ -1,8 +1,30 @@
 package pl.lodz.uni.math.rabinKarp;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Scanner;
+
+
 public class Engine {
     private static int ourModulo = 0;
+    public static String loadBook(String name) {
+        Scanner in = null;
+        String temp = "";
 
+        try {
+            in = new Scanner(new FileReader(name));
+            while (in.hasNextLine()) {
+                temp += in.nextLine();
+            }
+            in.close();
+
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
     public static int getOurModulo() {
         return ourModulo;
     }
@@ -51,9 +73,23 @@ public class Engine {
     }
 
     public static void main(String[] args) {
+        //pattern1 ajfvl
+        //pattern2 jfkdlopruj
+        String book = loadBook("book6000");
+        String pattern="jfkdlopruj";
         Engine engine = new Engine(Integer.MAX_VALUE / 2);
-        engine.searchForPattern("alamakotaalakota", "ala");
 
-    }
+        
+        long avgTime=0;
+        for (int i = 0; i < 500; i++) {
+            TimeCounter.start();
+            engine.searchForPattern(book, pattern);
+            avgTime+=TimeCounter.stopTime();
+        }
+        System.out.println("Avg time "+(avgTime/500));
+       
+       }
+    
+     
 
 }
